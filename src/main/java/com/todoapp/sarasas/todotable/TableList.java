@@ -10,17 +10,18 @@ public class TableList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String rowId;
+
+    private String id;
     private String rowContent;
     private String deadline;
     private String rowCondition;
 
-    public String getRowId() {
-        return rowId;
+    public String getId() {
+        return id;
     }
 
-    public void setRowId(String rowId) {
-        this.rowId = rowId;
+    public void setId(String rowId) {
+        this.id = rowId;
     }
 
     public String getRowContent() {

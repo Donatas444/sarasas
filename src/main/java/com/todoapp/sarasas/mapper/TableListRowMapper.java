@@ -12,10 +12,10 @@ public class TableListRowMapper implements RowMapper<TableList> {
     public TableList mapRow(ResultSet resultSet, int i) throws SQLException {
         TableList tableList = new TableList();
 
-        tableList.setRowId(resultSet.getString("Id"));
-        tableList.setRowContent(resultSet.getString("Turinys"));
+        tableList.setId(resultSet.getString("id"));
+        tableList.setRowContent(resultSet.getString("rowContent"));
         tableList.setDeadline(resultSet.getString("deadline"));
-        tableList.setRowCondition(resultSet.getString("Busena"));
+       tableList.setRowCondition(resultSet.getString("rowCondition"));
 
         return tableList;
     }

@@ -12,16 +12,13 @@ import java.util.List;
 public class ApplicationController {
 
 
-
     @Resource
     private TableListService tableListService;
 
     @GetMapping("/todoList")
-    public List<TableList> getEntries(){
+    public List<TableList> getEntries() {
         return tableListService.findAll();
     }
-
-
 
     @PostMapping("/create")
     public void createTableList(@RequestBody TableList tableList) {
@@ -32,12 +29,14 @@ public class ApplicationController {
     public void deleteTableList(@RequestBody TableList tableList) {
         tableListService.deleteTableList(tableList);
     }
+
     @PutMapping("/update")
     public void updateTableList(@RequestBody TableList tableList) {
         tableListService.updateTableList(tableList);
     }
+
     @PutMapping("/insert")
-    public void insertTableList(@RequestBody TableList tableList){
+    public void insertTableList(@RequestBody TableList tableList) {
         tableListService.insertTableList(tableList);
     }
 }

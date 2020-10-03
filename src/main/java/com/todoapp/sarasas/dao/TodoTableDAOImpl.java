@@ -18,20 +18,22 @@ import java.util.Map;
 public class TodoTableDAOImpl implements TodoTableDAO {
 
     private static final String SELECT_ALL_LIST = "select * from tableList";
-    private static final String INSERT_JOB_TO_DO = "insert into tableList(rowId, rowContent, deadline," +
-            "rowCondition) values (:rowId,:rowContent,:deadline,:rowCondition)";
-    private static final String DELETE_JOB_TO_DO = "delete from tableList where rowId = :rowId";
+    private static final String INSERT_JOB_TO_DO = "insert into tableList(id, rowContent, deadline," +
+            "rowCondition) values (:id,:rowContent,:deadline,:rowCondition)";
+    private static final String DELETE_JOB_TO_DO = "delete from tableList where id = :id";
     private static final String UPDATE_JOB_TO_DO = "update tableList set rowContent=:rowContent, " +
-            "rowContent=:rowContent, deadline=:deadline where rowId=:rowId";
+            "rowContent=:rowContent, deadline=:deadline where id=:id";
 
 
     private NamedParameterJdbcTemplate template;
+
     public TodoTableDAOImpl(NamedParameterJdbcTemplate template) {
         this.template = template;
     }
+
     @Override
     public List<TableList> findAll() {
-      return template.query(SELECT_ALL_LIST, new TableListRowMapper());
+        return template.query(SELECT_ALL_LIST, new TableListRowMapper());
     }
 
     @Override
@@ -41,25 +43,26 @@ public class TodoTableDAOImpl implements TodoTableDAO {
 
     @Override
     public void updateList(TableList tableList) {
-updateSqlTemplate(tableList, UPDATE_JOB_TO_DO);
+        updateSqlTemplate(tableList, UPDATE_JOB_TO_DO);
     }
 
     @Override
     public void deleteFromList(TableList tableList) {
 
         Map<String, Object> map = new HashMap<>();
-        map.put("rowId", tableList.getRowId());
+        map.put("id", tableList.getId());
         template.execute(DELETE_JOB_TO_DO, map,
                 (PreparedStatementCallback<Object>) PreparedStatement::executeUpdate);
     }
 
     private SqlParameterSource generateInsertSqlParams(TableList tableList) {
         return new MapSqlParameterSource()
-                .addValue("rowId", tableList.getRowId())
+                .addValue("id", tableList.getId())
                 .addValue("rowContent", tableList.getRowContent())
                 .addValue("deadline", tableList.getDeadline())
                 .addValue("rowCondition", tableList.getRowCondition());
     }
+
     private void updateSqlTemplate(TableList tableList, String sqlString) {
         SqlParameterSource params = generateInsertSqlParams(tableList);
         template.update(sqlString, params, new GeneratedKeyHolder());
